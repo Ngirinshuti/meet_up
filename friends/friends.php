@@ -104,6 +104,7 @@ if ($users_num > 0) {
 						<?php echo ($unread > 0) ? '<span class="badge-red">' . $unread . '</span>' : ''; ?>
 					</a>
 				</li>
+				
 				<li id="notation">
 					<i class="fa fa-bars"></i>
 					<a id="logout" class="w3-card-4 w3-animate-bottom w3-theme-light" href="logout.php">

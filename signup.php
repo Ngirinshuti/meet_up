@@ -19,11 +19,6 @@
 		 $_SESSION['email']=$email;
 		  $code=mt_rand(100000,999999);
         $verify='not verified';
-          $to = $email;
-         $subject = "confirmation code";
-         $message = $code;
-         $header = "From:prudentenz001@gmail.com \r\n";    
-         $retval = mail($to,$subject,$message,$header);
 
 		$user_obj = new User($db_connection, $_SESSION['email']=$email);
 	

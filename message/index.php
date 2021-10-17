@@ -555,7 +555,7 @@ if (isset($_POST['getUserMessages']) && isset($_POST['user'])) {
 			</div>
 			<div class="all-active-users-wrapper w3-panel w3-theme-d3 w3-round"></div>
 		</div>
-		<input type="hidden" id="me" value="<?php echo $_SESSION["a_user"]; ?>" />
+		<input type="hidden" id="me" value="<?php echo $me->username; ?>" />
 		<div class="recent-messages w3-theme-d1 w3-round">
 		</div>
 		<div class="current-chat-wrapper w3-theme-dark w3-border w3-animate-zoom">

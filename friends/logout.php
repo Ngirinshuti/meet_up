@@ -1,8 +1,8 @@
 <?php require "../classes/init.php";
 	//session_start();
-if (isset($_SESSION['a_user'])) {
+if (isset($_COOKIE['name'])) {
 $conn = new mysqli("localhost", "root", "", "project2");
-$sql = "UPDATE users SET status = 'offline' WHERE username = '".$_SESSION['a_user']."'";
+$sql = "UPDATE users SET status = 'offline' WHERE username = '".$_COOKIE['name']."'";
 if ($conn->query($sql)) {
 
 session_destroy();

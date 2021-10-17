@@ -1,7 +1,6 @@
 <?php
-
+session_start();
 include 'token.php';
- session_start();
 $csrf = new csrf();
  
 // Generate Token Id and Valid
@@ -17,7 +16,7 @@ require 'classes/user.php';
    //$email=$_GET['email'];
 if (isset($_POST['sub'])) {
 $email=$_POST["email"];
-//$_SESSION['email']=$_POST["email"];
+$_SESSION['email']=$_POST["email"];
 $user_obj = new User($db_connection,$email);
       $verification = $user_obj->verify_now($email);
 

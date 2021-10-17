@@ -84,9 +84,14 @@ $salted="salting_string@12345".$password;
 						$stmt->bindParam(":code", $code);
 				$stmt->bindParam(":verify", $verify);
 				$stmt->execute();
-$_SESSION['email']=$email;
+//$_SESSION['email']=$email;
 				if ($stmt->rowCount() > 0) {
-				header("location:testing.php?conf=sent&email=$email");
+					 $to = $email;
+         $subject = "confirmation code";
+         $message = $code;
+         $header = "From:prudentenz001@gmail.com \r\n";    
+         $retval = mail($to,$subject,$message,$header);
+				header("location:testing.php?conf=sent");
 					//return['Success' => 'Account created successfully'];
 				}else{return ['Error' => 'Account creation failed please try again!'];}
 
@@ -130,10 +135,6 @@ $otp= mt_rand(100000, 999999);
 			//	$stmti->bindParam(":email", $email);
 $stmti->execute([$email]);
     //$_SESSION['stat'] = $status;
-$sql = "UPDATE users SET verify='Verified' WHERE email=? ";
- 	$stmti = $this->db->prepare($sql);
-				$stmti->bindParam(":email", $email);
-$stmti->execute([$email]);
     $to=$email;
     $from="From: prudentenz001@gmail.com";
     $subject="Verification Code";
@@ -141,7 +142,7 @@ $stmti->execute([$email]);
   
     $mailing = mail($to,$subject,$message,$from);
 
-  header('location:testing.php?message=code&email=$email');
+  header("location:testing.php?message=code");
 }
 else{
   header('location: verified.php?message=code');
@@ -254,7 +255,7 @@ $pass = sha1($salted);
 							$update->execute();
 							if (!empty($remember)) {
 $check=$remember;
-   setcookie("name",$identifier,time()+3600*24*7);
+   setcookie("name",$login->username,time()+3600*24*7);
    setcookie("password",$password,time()+3600*24*7);
    setcookie("check",$check,time()+3600*24*7);
   }

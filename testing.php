@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include 'token.php';
  
 $csrf = new csrf();
@@ -14,9 +14,8 @@ require 'classes/user.php';
   require 'classes/db.php';
   $db_obj        = new Con('localhost', 'root', 'project2', '');
   $db_connection = $db_obj->create_connection();
-  $email=$_GET['email'];
- // echo "...........".$email;
-   //$email=$_SESSION['email'];
+  //$email=$_GET['email'];
+   $email=$_SESSION['email'];
 if (isset($_POST['sub'])) {
 $code=$_POST["code"];
 $user_obj = new User($db_connection,$email);
@@ -26,7 +25,6 @@ $user_obj = new User($db_connection,$email);
 }
 ?>
 <?php
-session_start();
 /*if (isset($_COOKIE['password'],$_COOKIE['name'])) {
   $pwd=$_COOKIE['password'];
   $name=$_COOKIE['name'];
