@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="../css/font-awesome-4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../css/w3.css">
 	<link rel="stylesheet" href="../css/style2.css">
-	<?php require_once '../theme.php'; ?>
+	<?php //require_once '../theme.php'; ?>
 	
 	<style media="screen">
 		* {
@@ -199,82 +199,44 @@
 				<i style="color: inherit;" class="fa fa-image"></i>&nbsp;<span>Choose image</span>
 			</button>
 		</div>
-	</div>
+	</div><?php
+	$user=$_GET['id'];
+$user_obj = new User($db_connection,$user);
+  	$sele=$user_obj->profile1($user);
+  	    $fname=$_SESSION['p_userfname'];
+          $lname=$_SESSION['p_userlname'];
+            $about=$_SESSION['p_userabout'];
+             $address=$_SESSION['p_useraddress'];
+              //$image=$_SESSION['image'];
+ // echo "valiables".$fname.$lname;
+	?>
 
-	<div class="modal" id="address-modal">
-		<span class="close-modal"><i class="fa fa-times" style="font-size: 25px;color: red;"></i></span>
-		<div class="modal-content">
-			<select name="address" form="form2" id="address" placeholder="choose address" required>
-				<option value="">Address</option>
-				<option value="Rwanda">Rwanda</option>
-				<option value="Kenya">Kenya</option>
-				<option value="Universe">Universe</option>
-				<option value="World">World</option>
-			</select>
-			<button onclick="sendData('address', 'form2')" class="change w3-button w3-theme-dark">
-				&nbsp;<span>Change</span>
-			</button>
-		</div>
-	</div>
-
-	<div class="modal" id="about-modal">
-		<span class="close-modal"><i class="fa fa-times" style="font-size: 25px;color: red;"></i></span>
-		<div class="modal-content">
-			<textarea value="" rows="8" id="about-me" form="form3" name="about" placeholder="what about you ...?" required>
-			</textarea>
-			<button onclick="sendData('about-me', 'form3')" class="change w3-button w3-theme-dark">
-				<span>Change</span>
-			</button>
-		</div>
-	</div>
-
-	<!--The main container-->
-
+	
 	<div class="container w3-theme-light">
 		<?php require '../menu/menu.php'; ?>
 		<div class="west w3-card">
 			<?php require_once 'error.php'; ?>
 			<div class="user-box w3-card-4 w3-theme-d1 w3-round-large">
 				<div class="user-image">
-					<img class="" id="profile" src="../images/<?php echo $me->profile_pic; ?>" alt="profile" />
+					<!--<img class="" id="profile" src="../images/<?php echo $me->profile_pic; ?>" alt="profile" />-->
+					<?php $sele=$user_obj->profile1_image($user); ?>
 					<div class="image-data">
-						<p><span style="font-weight: bold;"><?php echo ucfirst($me->fname) . " " . ucfirst($me->lname); ?></span></p>
-						<p><span class='u'>From</span>: <span class="detail"><?php echo $me->address; ?></span></p>
-						<p><span class='u'>About me</span>: <span><?php echo ucfirst($me->about); ?></span></p>
+						<p><span style="font-weight: bold;"><?php  echo ucfirst($fname) . " " . ucfirst($lname); ?></span></p>
+						<p><span class='u'>From</span>: <span class="detail"><?php echo $address; ?></span></p>
+						<p><span class='u'>About me</span>: <span><?php echo ucfirst($about); ?></span></p>
 					</div>
 				</div>
 				<div class="user-info">
 					<div class="user-data">
-						<li><?php echo ucfirst($me->fname . " " . $me->lname); ?></li>
+						<li><?php echo ucfirst($fname) . " " . ucfirst($lname); ?></li>
 					</div>
-					<div class="profile-data w3-round">
-						<button class="w3-button w3-theme-l2">
-							<span><i class="fa fa-user"></i></span><span>Friends</span>
-						</button>
-						<button class="w3-button w3-theme-l2" onclick="myFunction('login-modal')">
-							<span><i class="fa fa-image"></i></span><span>Profile</span>
-						</button>
-						<button class="w3-button w3-theme-l2" onclick="myFunction('address-modal')">
-							<span><i class="fa fa-home"></i></span><span>Address</span>
-						</button>
-						<button class="w3-button w3-theme-l2" onclick="myFunction('about-modal')">
-							<span><i class="fa fa-question"></i></span><span>About</span>
-						</button>
-					</div>
+					
 				</div>
 			</div>
 			<div class="footer w3-card-4 w3-round-large w3-theme-dark">
 			</div>
 			<div id="forms" style="display: none;">
-				<form action="properties.php" method="post" enctype="multipart/form-data" id="form1">
-					<input type="hidden" name="page" value="<?php echo $_SERVER['PHP_SELF']; ?>" />
-				</form>
-				<form action="properties.php" method="post" id="form2">
-					<input type="hidden" name="page" value="<?php echo $_SERVER['PHP_SELF']; ?>" />
-				</form>
-				<form action="properties.php" method="post" id="form3">
-					<input type="hidden" name="page" value="<?php echo $_SERVER['PHP_SELF']; ?>" />
-				</form>
+			
 			</div>
 		</div>
 	</div>

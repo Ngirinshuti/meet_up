@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 09:28 PM
+-- Generation Time: Oct 18, 2021 at 05:30 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.7
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `project2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `c_id` int(255) NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  `p_id` int(255) NOT NULL,
+  `commenter` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -56,6 +69,17 @@ CREATE TABLE `friends` (
   `partener` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `friends`
+--
+
+INSERT INTO `friends` (`friend`, `partener`) VALUES
+('Lissouba', 'enzo'),
+('Lissouba', 'vava'),
+('Makuza', 'enzo'),
+('Makuza', 'vava'),
+('vava', 'enzo');
+
 -- --------------------------------------------------------
 
 --
@@ -71,6 +95,16 @@ CREATE TABLE `messages` (
   `status` varchar(10) NOT NULL DEFAULT 'unread'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender`, `reciever`, `body`, `date_`, `status`) VALUES
+(1173, 'vava', 'enzo', 'hello', '2021-10-17 19:08:20', 'read'),
+(1282, 'Lissouba', 'vava', 'hello valentin', '2021-10-18 11:52:53', 'read'),
+(1292, 'vava', 'Lissouba', 'yes bro', '2021-10-18 11:53:21', 'read'),
+(2224, 'enzo', 'vava', 'hello vava', '2021-10-17 19:07:44', 'read');
+
 -- --------------------------------------------------------
 
 --
@@ -80,10 +114,23 @@ CREATE TABLE `messages` (
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
   `post` varchar(100) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `video` varchar(255) NOT NULL,
   `username` varchar(100) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `description` varchar(200) NOT NULL
+  `likes` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `post`, `image`, `video`, `username`, `date`, `likes`) VALUES
+(74, 'ferrr', 'me.png', '', 'enzo', '2021-10-17 18:10:52', 0),
+(78, ' i dont know', 'valentin.jpg', '', 'Lissouba', '2021-10-18 11:56:46', 0),
+(87, 'video', '', 'Best English Motivational Status __ English Motivational Video For Whatsapp Status  #chrisgardener.mp4', 'enzo', '2021-10-18 13:29:04', 0),
+(88, 'hey', 'me.png', '', 'enzo', '2021-10-18 15:15:30', 0),
+(89, '', '', 'Best English Motivational Status __ English Motivational Video For Whatsapp Status  #chrisgardener.mp4', 'enzo', '2021-10-18 15:21:07', 0);
 
 -- --------------------------------------------------------
 
@@ -126,11 +173,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`fname`, `lname`, `email`, `dob`, `sex`, `username`, `password`, `about`, `profile_pic`, `address`, `status`, `code`, `verify`) VALUES
-('ngirinshuti', 'prudent', 'prudentenri001@gmail.com', '1999-09-08', 'Male', 'enzo', '5c75d5f8b3929955a990877220b21374a9f9f2fc', 'am new here', '265.png', 'Rwanda', 'offline', '154980', 'Verified');
+('ngirinshuti', 'prudent', 'prudentenri001@gmail.com', '2021-10-20', 'Male', 'enzo', '4c8b3664cee92bd72dafa03a6513b984850a1b78', 'Unknown', '615.png', 'Unknown', 'online', '500388', 'Verified'),
+('niyonsaba', 'pascal', 'niyopascalg@gmail.com', '1997-10-07', 'Male', 'Lissouba', 'e091dbf01fb1d6484fc5e69138b0ae89c1ce30b3', 'I am student', 'default.png', 'Rwanda', 'online', '433730', 'Verified'),
+('Nsanzimana', 'Emmanuel', 'nsanzimanaofficial@gmail.com', '2021-10-20', 'Male', 'Makuza', '4c8b3664cee92bd72dafa03a6513b984850a1b78', 'Unknown', 'default.png', 'Unknown', 'offline', '520666', 'Verified'),
+('ishimwe', 'valentin', 'prudentenz001@gmail.com', '2021-10-20', 'Male', 'vava', '4c8b3664cee92bd72dafa03a6513b984850a1b78', 'Unknown', '268.jpg', 'Unknown', 'online', '530036', 'Verified');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`c_id`);
 
 --
 -- Indexes for table `deleted_messages`
@@ -187,6 +243,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `c_id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
@@ -196,7 +258,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `pwdreset`

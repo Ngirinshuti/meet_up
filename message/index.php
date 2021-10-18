@@ -499,41 +499,7 @@ if (isset($_POST['getUserMessages']) && isset($_POST['user'])) {
 
 <body class="w3-theme-l2">
 	<div class="container">
-		<div class="header w3-theme-dark w3-padding-0 w3-round">
-			<div class="left w3-bar">
-				<img src="../images/<?php echo $me->profile_pic; ?>" alt="profile" />
-				<div class="search">
-					<input type="search" placeholder="search " />
-				</div>
-			</div>
-			<ul>
-				<li title="Home"><i class="fa fa-home"></i></li>
-				<li title="Profile">
-					<a href="../friends/profile.php">
-						<i class="fa fa-user"></i>
-					</a>
-				</li>
-				<li title="Friends">
-					<a href="../friends/friends.php">
-						<i class="fa fa-users"></i>
-						<?php echo ($req_num > 0) ? '<span class="badge-red">' . $req_num . '</span>' : ''; ?>
-					</a>
-				</li>
-				<li title="Messages" class="active">
-					<a href="index.php">
-						<i class="fa fa-wechat"></i>
-						<span class="badge-red" style="display: none" id="unread"></span>
-					</a>
-				</li>
-				<li id="notation">
-					<i class="fa fa-bars"></i>
-					<a id="logout" class="w3-button w3-animate-zoom w3-card-4 w3-theme-d4" href="../friends/logout.php">
-						<i class="fa fa-sign-out" style="font-size: 14px;"></i>
-						<span>Logout</span>
-					</a>
-				</li>
-			</ul>
-		</div>
+<?php require '../menu/menu.php'; ?>
 		<div class="messages-search-wrapper w3-border-theme w3-round">
 			<input type="search" id="mySearch" onkeyup="filterTable(this.value.trim())" class="w3-input w3-round-medium w3-khaki w3-padding" placeholder="Search here" maxlength="40" />
 			<div class="w3-round">

@@ -255,13 +255,13 @@ $pass = sha1($salted);
 							$update->execute();
 							if (!empty($remember)) {
 $check=$remember;
-   setcookie("name",$login->username,time()+3600*24*7);
+   setcookie("name",$row->username,time()+3600*24*7);
    setcookie("password",$password,time()+3600*24*7);
    setcookie("check",$check,time()+3600*24*7);
   }
   else{
 $check=0;
-     setcookie("name",$identifier,7);
+     setcookie("name",$row->username,7);
        setcookie("password",$password,7);
          setcookie("check",$check,7);
   }
@@ -349,6 +349,155 @@ else{
 				return["Error" => "Error upadating <u>".$property.".</u>"];
 			}
 		}
+		function create_post($texts,$dates,$user)
+ {
+   $image_file_name = $_FILES['image']['name'];
+    $image = "./images/".$image_file_name;
+ $uploaded = !empty($image_file_name) && move_uploaded_file(
+            $_FILES['image']['tmp_name'], $image
+        );
+  $image_name = basename(!$uploaded  ? "" : $image);
 
-	}
-?>
+  $video_file_name = $_FILES['video']['name'];
+    $video = "./videos/".$video_file_name;
+ $uploadedv = !empty($video_file_name) && move_uploaded_file(
+            $_FILES['video']['tmp_name'], $video
+        );
+  $video_name = basename(!$uploadedv  ? "" : $video);
+if(empty($text) && empty($image_name) && empty($video_name) ){
+  	return["Error" => "Post is not submitted because you submitted an empty post."];
+			}
+			else
+			{
+				
+			$sql = "INSERT INTO posts(post,image,video, username,date) VALUES( :texts, :image_name, :video_name, :user, :dates)";
+
+				$stmt = $this->db->prepare($sql);
+				$stmt->bindParam(":texts", $texts);
+				$stmt->bindParam(":image_name", $image_name);
+				$stmt->bindParam(":video_name", $video_name);
+				$stmt->bindParam(":user", $user);
+				$stmt->bindParam(":dates", $dates);
+				$stmt->execute();
+
+				if ($stmt->rowCount() > 0) {
+
+					$this->select_post();
+			
+				}
+			}
+ } 
+ function select_post()
+ {
+ 	$n=0;
+ 	$time=date('d/m/y H:i:s');
+				$sql  = "SELECT * FROM posts ORDER BY date desc";
+			$select = $this->db->prepare($sql);
+				$select->execute();		
+				if ($select->rowCount() >= 1) {
+					$row = $select->fetchAll(PDO::FETCH_OBJ);
+					//$dat = $row->date;
+					foreach ($row as $val) {
+						?>
+						<form method="post" action="post.php" style="background: white;border: 0px;"><fieldset style="background-color: white;text-align: center;width: 80%;margin-left: 2cm;">
+						
+							<?php
+
+						$id=$val->id;
+						$dates=$val->date;
+						$userna=$val->username;
+$sql  = "SELECT * FROM users where username=?";
+			$select = $this->db->prepare($sql);
+				$select->execute([$userna]);		
+				if ($select->rowCount() >= 1) {
+					$row = $select->fetch(PDO::FETCH_OBJ);
+					if ($row->status=='online') {?>
+		<div class="active-user-wrapper w3-round-large" id=""><div class="active-user-data-wrapper"><div class="active-user-image-wrapper w3-white w3-circle"><img src='../images/<?php echo $row->profile_pic ;?>' class="w3-image w3-circle" /><span class="online-dot"></span></div><span class="name"></span></div></div>				
+					<?php } else{
+					?>
+						<div class="active-user-wrapper w3-round-large" id=""><div class="active-user-data-wrapper"><div class="active-user-image-wrapper w3-white w3-circle"><img src='../images/<?php echo $row->profile_pic ;?>' class="w3-image w3-circle" /></div><span class="name"></span></div></div>
+<?php }}
+
+						if (empty($val->image) && empty($val->video)) {
+
+						echo "<div class='username'><a href='../friends/profile1.php?id=$id' style='color:green;font-size:30px'> ".$val->username."</a><i style='color: gray;'> on ".$dates."</i></div><br>";
+						echo $val->post."<br>";
+						}
+						else if(!empty($val->image) && empty($val->video)){
+							echo "<div class='username'><a href='../friends/profile1.php?id=$id' style='color:green;font-size:30px'> ".$val->username."</a><i style='color: gray;'> on ".$dates."</i></div><br>";
+						echo $val->post."<br>";
+						?>
+						<img src='images/<?php echo $val->image ;?>' style="width: 6cm;height: 8cm;" >
+<?php } else if(empty($val->image) && !empty($val->video)){
+					echo "<div class='username'><a href='../friends/profile1.php?id=$id' style='color:green;font-size:30px'> ".$val->username."</a><i style='color: gray;'> on ".$dates."</i></div><br>";
+						echo $val->post."<br>";
+						?><video style="width: 6cm;height: 8cm;" autoplay=""><source src="videos/<?php echo $val->video ;?>" type="video/mp4"></video>
+<?php }
+	?>
+						<br>
+						<input type="hidden" name="id" value="<?php echo $id ?>">
+						<input type="submit" name="like" value="Like" style="border: 0px;background-color: dodgerblue;width: 3cm;">
+<input type="submit" name="comment" value="Comment" style="border: 0px;background-color: dodgerblue;width: 3cm;">
+					</fieldset></form><br>
+
+						<hr><?php
+					}
+			
+					}
+				
+			}
+			function profile1($user)
+ {
+ 
+$sql   = "SELECT username FROM posts WHERE id = ?";
+				$stmt = $this->db->prepare($sql);
+				$stmt->execute([$user]);
+				$row = $stmt->fetch(PDO::FETCH_OBJ);
+          $username=$row->username;
+				if ($stmt->rowCount() ==1 )
+				{ 
+
+$sql1   = "SELECT * FROM users WHERE username = ?";
+$userse=$_SESSION["a_user"];
+				$stmt1 = $this->db->prepare($sql1);
+				$stmt1->execute([$username]);
+				$row = $stmt1->fetchAll(PDO::FETCH_OBJ);
+				foreach ($row as $val) {
+          $fname=$val->fname;
+          $lname=$val->lname;
+          $email=$val->email;
+          $about=$val->about;
+          $address=$val->address;
+          $usern=$val->username;
+          if ($usern==$userse) {
+          header("location:../friends/profile.php");
+          }
+          else
+          {
+          	require_once '../theme.php';
+          $_SESSION['p_userfname']=$fname;
+           $_SESSION['p_userlname']=$lname;
+            $_SESSION['p_userabout']=$about;
+             $_SESSION['p_useraddress']=$address;
+
+				}}}}
+			function profile1_image($user)
+ {
+
+$sql   = "SELECT username FROM posts WHERE id = ?";
+				$stmt = $this->db->prepare($sql);
+				$stmt->execute([$user]);
+				$row = $stmt->fetch(PDO::FETCH_OBJ);
+          $username=$row->username;
+//echo "fghjkl".$username;
+				if ($stmt->rowCount() == 1 )
+				{ 
+
+$sql1   = "SELECT profile_pic FROM users WHERE username = ?";
+				$stmt1 = $this->db->prepare($sql1);
+				$stmt1->execute([$username]);
+				$row = $stmt1->fetchAll(PDO::FETCH_OBJ);
+				foreach ($row as $val) {
+         ?><img src='../images/<?php echo $val->profile_pic ;?>' style="width: 4cm;height: 8cm;" ><?php
+				}}}
+			}

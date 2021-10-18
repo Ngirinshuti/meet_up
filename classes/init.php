@@ -7,12 +7,13 @@
 
 	$db_obj         = new Con();
 	$db_connection  = $db_obj->create_connection();
-	$user_obj       = new User($db_connection, $_COOKIE['name']);
-	$friend_obj     = new Friends($db_connection, $_COOKIE['name']);
-	$msg_obj        = new Message($db_connection, $_COOKIE['name']);
+	$user_obj       = new User($db_connection, $_SESSION["a_user"]);
+	$friend_obj     = new Friends($db_connection, $_SESSION["a_user"]);
+	$msg_obj        = new Message($db_connection, $_SESSION["a_user"]);
 	$date_obj       = new Dates();
 
-	if (!isset($_COOKIE['name']) || !$user_obj->user_exist($_COOKIE['name'])) {
+	if (!isset($_SESSION["a_user"]) || !$user_obj->user_exist($_SESSION["a_user"])) {
+        session_destroy();
         setcookie("name",'',time()-7000000,'/');
 setcookie("password",'',time()-7000000,'/');
 setcookie("check",'',time()-7000000,'/');
@@ -24,7 +25,7 @@ setcookie("check",'',time()-7000000,'/');
 	$active_friends = $friend_obj->active_friends();
 	$users          = $user_obj->get_all_users(true);
 	$users_num      = $user_obj->get_all_users(false);
-	$me             = $user_obj->get_user_data($_COOKIE['name']);
+	$me             = $user_obj->get_user_data($_SESSION["a_user"]);
 	$unread         = $msg_obj->get_all_unread();
 
 	// date_default_timezone_set("Africa/Kigali");

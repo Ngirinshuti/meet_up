@@ -12,7 +12,8 @@ if($csrf->check_valid('post')) {
 } 
 ?>
 <?php
-if (isset($_COOKIE['password'],$_COOKIE['name'])) {
+if (isset($_SESSION["a_user"])) {
+//$_SESSION["a_user"]=$_COOKIE['name'];
   //require 'friends/profile.php';
    header("location:friends\profile.php");
 
