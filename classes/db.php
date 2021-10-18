@@ -9,7 +9,7 @@ class Con{
 	public function __construct(){
 		$this->server   = "localhost";
 		$this->user     = "root";
-		$this->database = "project2";
+		$this->database = "new_poject2";
 		$this->password = "";
 	}
 
