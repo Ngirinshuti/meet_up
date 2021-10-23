@@ -1,16 +1,15 @@
 <?php session_start();
   require "classes/user.php";
-  require "classes/db.php"; 
+  require "classes/DB.php"; 
 
-  $db = new Con();
-  $conn = $db->create_connection();
+  $conn = DB::conn();
 
   if (isset($_POST['login'])) {
-	  $username = filter_data($_POST["username"]);
-	  $password = filter_data($_POST["password"]);
-$remember = filter_data($_POST["remember"]);
+    $username = filter_data($_POST["username"]);
+    $password = filter_data($_POST["password"]);
+    $remember = filter_data($_POST["remember"]);
     $user_obj = new User($conn, $username);
-	  $log_user = $user_obj->login_user($username, $password,$remember);
+    $log_user = $user_obj->login_user($username, $password,$remember);
 
     if (isset($log_user["Error"])) {
       header("location: index.php?Error=".$log_user["Error"]);
@@ -23,9 +22,9 @@ $remember = filter_data($_POST["remember"]);
   }
   
   function filter_data($data){
-  	htmlspecialchars($data);
-  	trim($data);
-  	stripcslashes($data);
-  	return $data;
+    htmlspecialchars($data);
+    trim($data);
+    stripcslashes($data);
+    return $data;
   }
 ?>

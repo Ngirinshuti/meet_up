@@ -4,9 +4,8 @@ if (isset($_SESSION["a_user"])) {
     exit;
 }
 require 'classes/user.php';
-require 'classes/db.php';
-$db_obj        = new Con('localhost', 'root', 'project2', '');
-$db_connection = $db_obj->create_connection();
+require 'classes/DB.php';
+$db_connection = DB::conn();
 
 if (isset($_POST['register'])) {
     $fname    = test_input($_POST["fname"]);
