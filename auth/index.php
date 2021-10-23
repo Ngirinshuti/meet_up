@@ -74,7 +74,7 @@ $validator->methodPost(
             <div class="formBody">
 
                 <div class="authInput <?php echo $errorClass('username'); ?>">
-                    <Label for="login_username">Username</Label>
+                    <Label for="login_username">Username or email</Label>
                     <input value="<?php echo $data("username"); ?>" name="username" placeholder="Type username.." type="text" id="login_username" />
                     <?php echo $errors('username'); ?>
                 </div>

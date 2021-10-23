@@ -66,6 +66,7 @@ $validator->methodPost(
                 <a href="#!" class="formBrand">MeetUp</a>
                 <h2>Verify Email</h2>
             </div>
+            <?php echo isset($_GET['msg']) ? "<div class='formMsg'>{$_GET['msg']}</div>" : ""; ?>
             <?php echo $msg(); ?>
             <?php echo $mainError(); ?>
             <div class="formBody">

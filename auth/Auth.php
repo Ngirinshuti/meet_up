@@ -26,20 +26,23 @@ class Auth
      */
     public static function login(
         string $password,
-        string $email = "",
         string $username = "",
         bool $remember_me = false
     ): User|bool {
-        $user = User::findOne($username, $email);
+        $is_email = filter_var($username, FILTER_VALIDATE_EMAIL);
+        $key = $is_email ? "email" : "username";
+
+        $user = User::findOne(...[$key => $username]);
 
         if (!$user) {
             throw new AuthException("Incorrect credentials");
         }
-        
+
         // compare password
         if (!password_verify($password, $user->password)) {
             throw new AuthException("Incorrect credentials");
         }
+
 
         return $user;
     }
@@ -109,7 +112,7 @@ class Auth
         if (!$user) {
             throw new AuthException("User with email '$email' not found!");
         }
-        
+
         if ($user->verified) {
             throw new AuthException("This account is already verified!");
         }
