@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2021 at 04:21 PM
+-- Generation Time: Oct 24, 2021 at 09:40 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -32,18 +32,6 @@ CREATE TABLE `comments` (
   `comment` varchar(255) NOT NULL,
   `p_id` int(255) NOT NULL,
   `commenter` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `deleted_messages`
---
-
-CREATE TABLE `deleted_messages` (
-  `user` varchar(100) NOT NULL,
-  `message_id` int(11) NOT NULL,
-  `date_` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -93,20 +81,24 @@ CREATE TABLE `messages` (
   `reciever` varchar(100) NOT NULL,
   `body` varchar(1000) NOT NULL,
   `date_` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` varchar(10) NOT NULL DEFAULT 'unread'
+  `status` varchar(10) NOT NULL DEFAULT 'unread',
+  `story_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`id`, `sender`, `reciever`, `body`, `date_`, `status`) VALUES
-(1173, 'vava', 'enzo', 'hello', '2021-10-17 19:08:20', 'read'),
-(1282, 'Lissouba', 'vava', 'hello valentin', '2021-10-18 11:52:53', 'read'),
-(1292, 'vava', 'Lissouba', 'yes bro', '2021-10-18 11:53:21', 'read'),
-(2224, 'enzo', 'vava', 'hello vava', '2021-10-17 19:07:44', 'read'),
-(2964, 'valentin', 'coder', 'Hello, brother!', '2021-10-24 09:30:40', 'unread'),
-(3295, 'valentin', 'coder', 'Wowow', '2021-10-24 09:30:43', 'unread');
+INSERT INTO `messages` (`id`, `sender`, `reciever`, `body`, `date_`, `status`, `story_id`) VALUES
+(896, 'vava', 'enzo', 'Hi', '2021-10-24 15:01:48', 'unread', NULL),
+(1173, 'vava', 'enzo', 'hello', '2021-10-17 19:08:20', 'read', NULL),
+(1282, 'Lissouba', 'vava', 'hello valentin', '2021-10-18 11:52:53', 'read', NULL),
+(1292, 'vava', 'Lissouba', 'yes bro', '2021-10-18 11:53:21', 'read', NULL),
+(1824, 'vava', 'Lissouba', 'Go get them!', '2021-10-24 15:02:00', 'unread', NULL),
+(2095, 'vava', 'Lissouba', 'YEah!', '2021-10-24 15:01:55', 'unread', NULL),
+(2224, 'enzo', 'vava', 'hello vava', '2021-10-17 19:07:44', 'read', NULL),
+(2964, 'valentin', 'coder', 'Hello, brother!', '2021-10-24 09:30:40', 'unread', NULL),
+(3295, 'valentin', 'coder', 'Wowow', '2021-10-24 09:30:43', 'unread', NULL);
 
 -- --------------------------------------------------------
 
@@ -123,38 +115,6 @@ CREATE TABLE `posts` (
   `date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`id`, `post`, `image`, `video`, `username`, `date`) VALUES
-(74, 'ferrr', 'me.png', '', 'enzo', '2021-10-17 18:10:52'),
-(78, ' i dont know', 'valentin.jpg', '', 'Lissouba', '2021-10-18 11:56:46'),
-(88, 'hey', 'me.png', '', 'enzo', '2021-10-18 15:15:30'),
-(90, 'Hey there!', '1a(17).jpg', '', 'vava', '2021-10-18 16:03:14'),
-(91, 'HHEEY', '', 'New in Chrome 91_ File System Access API improvements, Google IO, and more.mp4', 'vava', '2021-10-18 16:10:12'),
-(108, 'Yees', '', '7079347.mp4', 'vava', '2021-10-18 17:02:02'),
-(109, 'Image post', '2993237.png', '', 'vava', '2021-10-18 17:11:59'),
-(110, 'Testing', '', '3779109.mp4', 'vava', '2021-10-18 17:17:16'),
-(111, '', '9445547.mp4', '', 'vava', '2021-10-18 18:46:26'),
-(112, 'At macao', '7867926.jpg', '', 'vava', '2021-10-18 18:47:23'),
-(113, '', '', '5307195.jpg', 'vava', '2021-10-18 18:56:56'),
-(114, '', '', '2878993.mp4', 'vava', '2021-10-18 19:11:32'),
-(115, '', '6935058.jpeg', '', 'vava', '2021-10-18 19:18:15'),
-(116, '', '', '5869678.mp4', 'vava', '2021-10-18 19:21:19'),
-(117, 'Hello, Guys!', '3436968.JPG', '', 'enzo', '2021-10-22 18:12:05'),
-(118, 'So hey!', '', '', 'enzo', '2021-10-22 18:13:30'),
-(119, 'Okay bro', '', '', 'valentin', '2021-10-24 12:28:55'),
-(120, 'New post', '4691943.jpg', '', 'valentin', '2021-10-24 12:35:10'),
-(121, 'Okay then', '1233450.jpg', '', 'valentin', '2021-10-24 12:36:26'),
-(122, 'Video post', '', '9799880.mp4', 'vava', '2021-10-24 13:35:24'),
-(123, 'Okamjdhjjasdha', '', '450197.mp4', 'vava', '2021-10-24 13:50:56'),
-(124, 'Okamkdhjhjas', '', '', 'vava', '2021-10-24 13:51:23'),
-(125, 'My video then', '', '1083292.mp4', 'valentin', '2021-10-24 14:16:37'),
-(126, 'Heymsadkjjhkas', '', '', 'vava', '2021-10-24 14:16:57'),
-(127, 'HAhhahaha', '5207611.jpeg', '', 'vava', '2021-10-24 14:17:34'),
-(128, 'Okasyugasghas', '', '2349489.mp4', 'vava', '2021-10-24 14:20:23');
-
 -- --------------------------------------------------------
 
 --
@@ -165,15 +125,6 @@ CREATE TABLE `post_likes` (
   `username` varchar(100) NOT NULL,
   `post_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `post_likes`
---
-
-INSERT INTO `post_likes` (`username`, `post_id`) VALUES
-('enzo', 74),
-('valentin', 119),
-('vava', 90);
 
 -- --------------------------------------------------------
 
@@ -188,6 +139,49 @@ CREATE TABLE `pwdreset` (
   `token` varchar(200) NOT NULL,
   `expires` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stories`
+--
+
+CREATE TABLE `stories` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `image` varchar(300) NOT NULL,
+  `description` text NOT NULL,
+  `expired` tinyint(4) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `has_media` tinyint(4) DEFAULT 0,
+  `media` varchar(300) NOT NULL,
+  `views` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stories`
+--
+
+INSERT INTO `stories` (`id`, `username`, `image`, `description`, `expired`, `created_at`, `has_media`, `media`, `views`) VALUES
+(53, 'vava', '6969390', 'Hashye!', 0, '2021-10-24 19:22:05', 0, '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `story_views`
+--
+
+CREATE TABLE `story_views` (
+  `story_id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `story_views`
+--
+
+INSERT INTO `story_views` (`story_id`, `username`) VALUES
+(53, 'vava');
 
 -- --------------------------------------------------------
 
@@ -222,7 +216,7 @@ INSERT INTO `users` (`fname`, `lname`, `email`, `dob`, `sex`, `username`, `passw
 ('niyonsaba', 'pascal', 'niyopascalg@gmail.com', '1997-10-07', 'Male', 'Lissouba', 'e091dbf01fb1d6484fc5e69138b0ae89c1ce30b3', 'I am student', 'default.png', 'Rwanda', 'online', '433730', 0, ''),
 ('Nsanzimana', 'Emmanuel', 'nsanzimanaofficial@gmail.com', '2021-10-20', 'Male', 'Makuza', '4c8b3664cee92bd72dafa03a6513b984850a1b78', 'Unknown', 'default.png', 'Unknown', 'offline', '520666', 0, ''),
 ('ISHIMWE', 'Valentin', 'ishimwevalentin3@gmail.com', '0000-00-00', '', 'valentin', '$2y$10$hzYhxD7t3Q56GM5xR.0Y3.S.hWizI5cdd/H5rT5Y04w9Sb3v2fhHy', '', '629.JPG', 'Kenya', 'offline', '110085', 1, '$2y$10$n/3CUMIZDyGet0drJXgvceTH5J81kwEuWF6l/QslXd0voDBWNDnm6'),
-('ishimwe', 'valentin', 'prudentenz001@gmail.com', '2021-10-20', 'Male', 'vava', '$2y$10$0.ER4L9nsmnE8mLXRr52ROPNxIgjXV3TrTbyfpOfUq1ahpIu4KPEe', 'w', '268.jpg', 'Unknown', 'online', '530036', 1, ''),
+('ishimwe', 'valentin', 'prudentenz001@gmail.com', '2021-10-20', 'Male', 'vava', '$2y$10$0.ER4L9nsmnE8mLXRr52ROPNxIgjXV3TrTbyfpOfUq1ahpIu4KPEe', 'w', '268.jpg', 'Unknown', 'offline', '530036', 1, ''),
 ('ISHIMWE', 'jsdjhsd', 'ishimwevalentin3@gmail.comw', '0000-00-00', '', 'yeahp', '$2y$10$1xjROiN4i/3aQhpa8QU6EO2qnMDv40fjPlinSipovCdoQCHU9kJTW', '', '', '', 'offline', '870581', 0, '');
 
 --
@@ -234,13 +228,6 @@ INSERT INTO `users` (`fname`, `lname`, `email`, `dob`, `sex`, `username`, `passw
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`c_id`);
-
---
--- Indexes for table `deleted_messages`
---
-ALTER TABLE `deleted_messages`
-  ADD KEY `delete_message` (`message_id`),
-  ADD KEY `userdeletedmessage` (`user`);
 
 --
 -- Indexes for table `friendrequest`
@@ -263,7 +250,8 @@ ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `date_` (`date_`),
   ADD KEY `reciever` (`reciever`),
-  ADD KEY `sender` (`sender`);
+  ADD KEY `sender` (`sender`),
+  ADD KEY `story_reply` (`story_id`);
 
 --
 -- Indexes for table `posts`
@@ -284,6 +272,20 @@ ALTER TABLE `post_likes`
 --
 ALTER TABLE `pwdreset`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `stories`
+--
+ALTER TABLE `stories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_stories` (`username`);
+
+--
+-- Indexes for table `story_views`
+--
+ALTER TABLE `story_views`
+  ADD PRIMARY KEY (`story_id`,`username`),
+  ADD KEY `story_viewer` (`username`);
 
 --
 -- Indexes for table `users`
@@ -312,7 +314,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `pwdreset`
@@ -321,15 +323,14 @@ ALTER TABLE `pwdreset`
   MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for table `stories`
 --
+ALTER TABLE `stories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
--- Constraints for table `deleted_messages`
+-- Constraints for dumped tables
 --
-ALTER TABLE `deleted_messages`
-  ADD CONSTRAINT `delete_message` FOREIGN KEY (`message_id`) REFERENCES `messages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `userdeletedmessage` FOREIGN KEY (`user`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `friendrequest`
@@ -350,7 +351,8 @@ ALTER TABLE `friends`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `reciever` FOREIGN KEY (`reciever`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sender` FOREIGN KEY (`sender`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `sender` FOREIGN KEY (`sender`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `story_reply` FOREIGN KEY (`story_id`) REFERENCES `stories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `posts`
@@ -364,6 +366,19 @@ ALTER TABLE `posts`
 ALTER TABLE `post_likes`
   ADD CONSTRAINT `post_likes` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_liked_posts` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `stories`
+--
+ALTER TABLE `stories`
+  ADD CONSTRAINT `user_stories` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `story_views`
+--
+ALTER TABLE `story_views`
+  ADD CONSTRAINT `story_viewed` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `story_viewer` FOREIGN KEY (`story_id`) REFERENCES `stories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
