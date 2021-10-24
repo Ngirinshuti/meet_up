@@ -1,6 +1,5 @@
 <?php 
 
-
 if (!isset($_POST['username']) || !isset($_POST['post_id'])) {
     header("Location: ./home.php");
     exit;
@@ -8,7 +7,15 @@ if (!isset($_POST['username']) || !isset($_POST['post_id'])) {
 
 require "./Post.php";
 
-$post = Post::findOne((int)$_POST['post_id']);
-$post->like($_POST['username']);
+$post = Post::findOne((int) $_POST['post_id']);
+
+$username = $_POST['username'];
+
+if ($post->likedBy($username)) {
+    $post->unlike($username);
+} else {
+    $post->like($username);
+}
+
 
 header("Location: ./home.php#post".$_POST['post_id']);

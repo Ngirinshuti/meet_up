@@ -1,15 +1,13 @@
   *,
   *:after,
   *:before {
-      box-sizing: border-box!important;
-      word-wrap: break-word!important;
+      box-sizing: border-box;
   }
   
   html,
   body {
       margin: 0;
       padding: 0;
-      font-family: "Trebuchet MS", Helvetica, sans-serif!important;
       overflow-x: auto;
   }
   
@@ -321,9 +319,13 @@
       text-align: center;
   }
   
-  .active {
+  li.active {
       border-radius: 0;
       border-bottom: 3px solid forestgreen;
       padding: 5px;
   }
+  .container li a {
+      color: var(--main-color);
+  }
+
   /*Profile page*/
