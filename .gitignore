@@ -1,4 +1,2 @@
-*.mp4
-
-/post/videos
-/post/images
+videos/*.mp4
+# images/**
