@@ -10,7 +10,6 @@ $user = $me;
 
 // friend posts array
 
-
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
 
@@ -44,6 +43,7 @@ $validator->methodPost(
         }
     }
 );
+
 $posts = Post::getFriendsPosts($user->username);
 
 ?>
