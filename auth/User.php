@@ -51,7 +51,7 @@ class User
         string $dob = "",
         string $sex = "",
         string $about = "",
-        string $profile_pic = "",
+        string $profile_pic = "default.png",
         string $address = "",
         string $status = "offline",
         string $code = "",

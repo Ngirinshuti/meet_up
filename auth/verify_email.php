@@ -1,10 +1,8 @@
 <?php
 // user email verify script 
-
-session_start();
-
-require "./Auth.php";
-require "../forms/Validator.php";
+require_once __DIR__ . "/./unauthenticate.php";
+require_once __DIR__ . "/./Auth.php";
+require_once __DIR__ . "/../forms/Validator.php";
 
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
@@ -66,7 +64,6 @@ $validator->methodPost(
                 <a href="#!" class="formBrand">MeetUp</a>
                 <h2>Verify Email</h2>
             </div>
-            <?php echo isset($_GET['msg']) ? "<div class='formMsg'>{$_GET['msg']}</div>" : ""; ?>
             <?php echo $msg(); ?>
             <?php echo $mainError(); ?>
             <div class="formBody">

@@ -1,9 +1,8 @@
 <?php
 // signup script
-session_start();
-
-require "./Auth.php";
-require "../forms/Validator.php";
+require_once __DIR__ . "/./unauthenticate.php";
+require_once __DIR__ . "/./Auth.php";
+require_once __DIR__ . "/../forms/Validator.php";
 
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();

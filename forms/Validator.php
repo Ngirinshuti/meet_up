@@ -377,14 +377,26 @@ class Validator
         $mainError = fn () => $this->getMainError() ? <<<ST
         <div class="formError">{$this->getMainError()}</div>
         ST : "";
-        $success_msg = fn () => $this->getSuccessMsg() ? <<<ST
-        <div class="formMsg">{$this->getSuccessMsg()}</div>
-        ST : "";
+        $success_msg = function () {
+            $msg = $this->getSuccessMsg() ? $this->getSuccessMsg() : (
+                isset($_SESSION["msg"]) ? $_SESSION["msg"] : ""
+            );
+            
+            if (empty($msg)) {
+                $msg = isset($_REQUEST["msg"]) ? $_REQUEST["msg"] : "";
+            }
+
+            return !empty($msg) ? <<<ST
+                <div class="formMsg">$msg</div>
+            ST : "";
+    
+        };
+
         $crsf_field = fn () => <<<ST
-            <input type='hidden' name="$token_id" value="$token_value" />
+            <input type="hidden" name="$token_id" value="$token_value" />
         ST;
-        
         return [$errors, $data, $errorClass, $mainError, $success_msg, $crsf_field];
+        
     }
 }
 

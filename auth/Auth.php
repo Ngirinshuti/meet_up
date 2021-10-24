@@ -152,7 +152,7 @@ class Auth
      * 
      * @return void
      */
-    public static function remember(string $username): void
+    public static function remember(string $username, $reset = false): void
     {
         $user = User::findOne(username: $username);
         $remember_me_cookie = bin2hex(random_bytes(32));
@@ -163,8 +163,10 @@ class Auth
             $remember_me_token
         );
 
-        $expiration = time() + (60 * 60 * 24 * 7);
-        setcookie("remember_me", $remember_me_cookie, $expiration);
+        $expiration = !$reset ? time() + (60 * 60 * 24 * 7) : time() - 3600;
+        $path = "/";
+        setcookie("auth_user", $user->username, $expiration, $path);
+        setcookie("remember_me", $remember_me_cookie, $expiration, $path);
     }
 
     /**
@@ -174,17 +176,15 @@ class Auth
      */
     public static function checkRemembered(): User|bool
     {
-        if (!isset($_COOKIE['remember_me'])) {
+        if (!isset($_COOKIE['remember_me'], $_COOKIE['auth_user'])) {
             return false;
         }
-
+        $user_cookie = $_COOKIE['auth_user'];
         $remember_me_cookie = $_COOKIE['remember_me'];
-        $remember_me_token  = password_hash($remember_me_cookie, PASSWORD_DEFAULT);
-        $query = "SELECT * FROM `users` WHERE `remember_me` = ?";
-        $stmt = DB::conn()->prepare($query);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, User::class);
-        $stmt->execute([$remember_me_token]);
-        $user = $stmt->fetch();
+        $remember_me_cookie = $_COOKIE['remember_me'];
+        $user = User::findOne($user_cookie);
+        
+        var_dump($user);
 
         if (!($user && password_verify($remember_me_cookie, $user->remember_me))) {
             return false;
@@ -237,7 +237,8 @@ class Auth
         // destroy current user session
         session_unset();
         session_destroy();
-        setcookie('remember_me', '', time() - 3600);
+        Auth::remember($_COOKIE['auth_user'], reset:true);
+        header("Location: {$GLOBALS['ROOT_URL']}/index.php");
     }
 }
 

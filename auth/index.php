@@ -1,10 +1,9 @@
 <?php
 // user login script 
 
-session_start();
-
-require "Auth.php";
-require __DIR__ . "/../forms/Validator.php";
+require_once __DIR__ . "/unauthenticate.php";
+require_once "Auth.php";
+require_once __DIR__ . "/../forms/Validator.php";
 
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
@@ -37,7 +36,7 @@ $validator->methodPost(
 
                     Auth::authenticate($user);
 
-                    // $validator->setSuccessMsg("You have logged in!");
+                    header("Location: ./");
                 }
             } catch (AuthException $e) {
                 $validator->setMainError($e->getMessage());

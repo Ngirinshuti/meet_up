@@ -3,8 +3,8 @@ if (isset($_SESSION["a_user"])) {
     header("location: friends/profile.php");
     exit;
 }
-require 'classes/user.php';
-require 'classes/DB.php';
+require_once 'classes/user.php';
+require_once 'classes/DB.php';
 $db_connection = DB::conn();
 
 if (isset($_POST['register'])) {

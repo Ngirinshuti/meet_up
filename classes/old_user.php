@@ -1,7 +1,7 @@
 <?php
 
 
-class User
+class OldUser
 {
     protected $me;
     protected $db;
