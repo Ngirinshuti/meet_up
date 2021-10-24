@@ -56,14 +56,13 @@ $validator->methodPost(
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="./css/auth.css">
     <title>Login</title>
 </head>
 
 <body>
-    <div class="authFormContainer">
+    <div class="mainFormContainer">
 
-        <form action="" method="post" class="authForm">
+        <form action="" method="post" class="mainForm">
             <div class="formHeader">
                 <a href="#!" class="formBrand">MeetUp</a>
                 <h2>Login</h2>
@@ -72,17 +71,17 @@ $validator->methodPost(
             <?php echo $mainError(); ?>
             <div class="formBody">
                 <?php echo $csrf(); ?>
-                <div class="authInput <?php echo $errorClass('username'); ?>">
+                <div class="mainInput <?php echo $errorClass('username'); ?>">
                     <Label for="login_username">Username or email</Label>
                     <input value="<?php echo $data("username"); ?>" name="username" placeholder="Type username.." type="text" id="login_username" />
                     <?php echo $errors('username'); ?>
                 </div>
-                <div class="authInput  <?php echo $errorClass('password'); ?>">
+                <div class="mainInput  <?php echo $errorClass('password'); ?>">
                     <label for="login_password">Password</label>
                     <input name="password" placeholder="Type password.." type="password" id="login_password" />
                     <?php echo $errors('password'); ?>
                 </div>
-                <div class="authInput  <?php echo $errorClass('remember_me'); ?>">
+                <div class="mainInput  <?php echo $errorClass('remember_me'); ?>">
                     <input name="remember_me" type="checkbox" id="login_remember_me" />
                     <label for="login_remember_me">Remember me</label>
                     <?php echo $errors('remember_me'); ?>

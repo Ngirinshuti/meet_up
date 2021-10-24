@@ -237,7 +237,9 @@ class Auth
         // destroy current user session
         session_unset();
         session_destroy();
-        Auth::remember($_COOKIE['auth_user'], reset:true);
+        if (isset($_COOKIE['auth_user'])) {
+            Auth::remember($_COOKIE['auth_user'], reset:true);
+        }
         header("Location: {$GLOBALS['ROOT_URL']}/index.php");
     }
 }

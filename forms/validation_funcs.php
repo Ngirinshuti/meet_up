@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * The file for validating php fields
  *
@@ -98,7 +99,7 @@ function maxLength($field_name, int $max_len, $arr)
     $length = strlen($arr[$field_name]);
     $more_than_len = $length > $max_len;
     throwError(
-        $more_than_len, 
+        $more_than_len,
         "$field_name must have no more than $max_len characters"
     );
 }
@@ -118,7 +119,7 @@ function minLength($field_name, int $min_len, $arr)
     $length = strlen($arr[$field_name]);
     $less_than_len = $length < $min_len;
     throwError(
-        $less_than_len, 
+        $less_than_len,
         "$field_name must have at least $min_len characters"
     );
 }
@@ -151,14 +152,12 @@ function isNumber($field_name, bool $bool, array $arr)
  * 
  * @return void
  */
-function shouldMatch(string $field_name, string $match_field_name,array $arr)
+function shouldMatch(string $field_name, string $match_field_name, array $arr)
 {
-    $value_mismatch = isset($arr[$match_field_name]) ? !(
-        $arr[$field_name] ===  $arr[$match_field_name]
-    ) : true;
+    $value_mismatch = isset($arr[$match_field_name]) ? !($arr[$field_name] ===  $arr[$match_field_name]) : true;
 
     throwError(
-        $value_mismatch, 
+        $value_mismatch,
         "$field_name should match $match_field_name"
     );
 }
@@ -180,6 +179,29 @@ function email(string $field_name, string $rule_name, array $data)
     throwError(!$value, "$field_name is not a valid email address");
 }
 
+/**
+ * Undocumented function
+ *
+ * @param string $field_name
+ * @param string $upload_dir
+ * @param array $data
+ * @return void
+ */
+function isFile(string $field_name, string $upload_dir, array &$data)
+{
+    $file_name = uploadFile($field_name, $upload_dir, $uploaded);
+
+    $data[$field_name] = $file_name;
+
+    if (empty($file_name)) {
+        return;
+    }
+
+    // var_dump($file_name);
+    if (!$uploaded) {
+        throwError(true, "Failed to upload file");
+    }
+}
 
 
 
@@ -197,4 +219,39 @@ function throwError(bool $condition, string $msg)
     if ($condition) {
         throw new FieldError($msg);
     }
+}
+
+
+
+
+
+/**
+ * File upload function
+ *
+ * @param string  $field_name  name of form field containing the file
+ * @param string  $destination file upload folder
+ * @param boolean $uploaded    reference variable true if file was uploaded
+ *
+ * @return string uploaded file name
+ */
+function uploadFile(
+    string $field_name,
+    $destination = "./uploads",
+    &$uploaded = false
+): string {
+    if (!$_FILES[$field_name]['name']) {
+        return "";
+    }
+    $random_number = strval(rand(100000, 9999999));
+    $name_array = explode(".", $_FILES[$field_name]['name']);
+    $file_name = $random_number . "." . end($name_array);
+    $file_destination = $destination . "/$file_name";
+
+    $uploaded = move_uploaded_file(
+        $_FILES[$field_name]['tmp_name'],
+        $file_destination
+    );
+
+    $file_name = basename(!$uploaded  ? "" : $file_destination);
+    return $file_name;
 }

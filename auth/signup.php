@@ -52,14 +52,13 @@ $validator->methodPost(
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="./css/auth.css">
     <title>Signup</title>
 </head>
 
 <body>
-    <div class="authFormContainer">
+    <div class="mainFormContainer">
 
-        <form action="" method="post" class="authForm">
+        <form action="" method="post" class="mainForm">
             <div class="formHeader">
                 <a href="#!" class="formBrand">MeetUp</a>
                 <h2>Signup</h2>
@@ -68,34 +67,34 @@ $validator->methodPost(
             <?php echo $mainError(); ?>
             <div class="formBody">
                 <?php echo $csrf(); ?>
-                <div class="authInput split <?php echo $errorClass('username'); ?>">
-                    <div class="authInput__split">
+                <div class="mainInput split <?php echo $errorClass('username'); ?>">
+                    <div class="mainInput__split">
                         <Label for="signup_firstname">Firstname</Label>
                         <input value="<?php echo $data("fname"); ?>" name="fname" placeholder="Type firstname.." type="text" id="signup_firstname" />
                         <?php echo str_replace("Fname", "Firstname", $errors('fname')); ?>
                     </div>
-                    <div class="authInput__split">
+                    <div class="mainInput__split">
                         <Label for="signup_lastname">Lastname</Label>
                         <input value="<?php echo $data("lname"); ?>" name="lname" placeholder="Type lastname.." type="text" id="signup_lastname" />
                         <?php echo str_replace("Lname", "Lastname", $errors('lname')); ?>
                     </div>
                 </div>
-                <div class="authInput <?php echo $errorClass('email'); ?>">
+                <div class="mainInput <?php echo $errorClass('email'); ?>">
                     <Label for="signup_email">E-mail</Label>
                     <input value="<?php echo $data("email"); ?>" name="email" placeholder="Type e-mail.." type="text" id="signup_email" />
                     <?php echo $errors('email'); ?>
                 </div>
-                <div class="authInput <?php echo $errorClass('username'); ?>">
+                <div class="mainInput <?php echo $errorClass('username'); ?>">
                     <Label for="signup_username">Username</Label>
                     <input value="<?php echo $data("username"); ?>" name="username" placeholder="Type username.." type="text" id="signup_username" />
                     <?php echo $errors('username'); ?>
                 </div>
-                <div class="authInput <?php echo $errorClass('password'); ?>">
+                <div class="mainInput <?php echo $errorClass('password'); ?>">
                     <label for="signup_password">Password</label>
                     <input name="password" placeholder="Type password.." type="password" id="signup_password" />
                     <?php echo str_replace('_', ' ', $errors('password')); ?>
                 </div>
-                <div class="authInput <?php echo $errorClass('confirm_password'); ?>">
+                <div class="mainInput <?php echo $errorClass('confirm_password'); ?>">
                     <label for="signup_confirm_password">Confirm Password</label>
                     <input name="confirm_password" placeholder="Re-type password.." type="password" id="signup_confirm_password" />
                     <?php echo str_replace('_', ' ', $errors('confirm_password')); ?>

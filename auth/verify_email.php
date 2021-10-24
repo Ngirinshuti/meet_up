@@ -31,7 +31,9 @@ $validator->methodPost(
         if ($validator->valid) {
             try {
                 if (Auth::verifyEmail(...$validator->valid_data)) {
-                    $validator->setSuccessMsg("Email was successfully verfied (:");
+                    header("Location: ./index.php?msg=Email was successfully verfied (:");
+                    // $validator->setSuccessMsg("");
+                    exit;
                 }
             } catch (AuthException $e) {
                 $validator->setMainError($e->getMessage());
@@ -51,15 +53,13 @@ $validator->methodPost(
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="./css/auth.css">
     <title>Verify</title>
 </head>
 
 <body>
-    <div class="authFormContainer">
+    <div class="mainFormContainer">
 
-
-        <form action="" method="post" class="authForm">
+        <form action="" method="post" class="mainForm">
             <div class="formHeader">
                 <a href="#!" class="formBrand">MeetUp</a>
                 <h2>Verify Email</h2>
@@ -69,7 +69,7 @@ $validator->methodPost(
             <div class="formBody">
                 <?php echo $csrf(); ?>
                 <input type="hidden" name="email" value="<?php echo isset($_SESSION['verify_email']) ? $_SESSION['verify_email'] : ""; ?>" />
-                <div class="authInput <?php echo $errorClass('verification_code'); ?>">
+                <div class="mainInput <?php echo $errorClass('verification_code'); ?>">
                     <Label for="verification_code">Verification code</Label>
                     <input value="<?php echo $data("verification_code"); ?>" name="verification_code" placeholder="Type verification code.." type="text" id="verification_code" />
                     <?php echo $errors('verification_code'); ?>

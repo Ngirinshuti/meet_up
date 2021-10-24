@@ -429,3 +429,18 @@ class FieldDoesNotExist extends Exception
 {
     // Something here if necessary
 }
+
+/**
+ * Error for non existing field 
+ * 
+ * @category Validation
+ * @package  Unknown
+ * @author   "ISHIMWE Valentin" <ishimwevalentin3@gmail.com>
+ * @license  mitlicense.org MIT
+ * @link     link
+ */
+
+class FormError extends Exception
+{
+    // Something here if necessary
+}
