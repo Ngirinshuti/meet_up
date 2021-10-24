@@ -13,6 +13,7 @@
  */
 
 require "validation_funcs.php";
+require "../token.php";
 
 /**
  * Validator class
@@ -133,7 +134,7 @@ class Validator
                 try {
                     $this->validateField($field);
                 } catch (FieldDoesNotExist | FieldEmpty $e) {
-                    $this->addError($field, $e->getMessage());
+                    $this->addError($field, str_replace("_", " ", $e->getMessage()));
                 }
             }
         );
@@ -192,7 +193,15 @@ class Validator
     public function methodPost(Closure $callback)
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            $callback($this);
+            $csrf = new csrf();
+            // Generate Token Id and Valid
+            $token_id = $csrf->get_token_id();
+
+            if ($csrf->check_valid('post')) {
+                $callback($this);
+            } else {
+                exit("Page expired!");
+            }
         }
     }
 
@@ -295,13 +304,13 @@ class Validator
                 if (is_int($rule)) {
                     $rule_handler = $this->snakeToCamelCase($rule_constraint);
                 } else {
-                    $rule_handler = $this->snakeToCamelCase($rule);   
+                    $rule_handler = $this->snakeToCamelCase($rule);
                 }
 
                 if (!function_exists($rule_handler)) {
                     exit("Rule handler '$rule_handler' don't exist");
                 }
-                
+
                 try {
                     $rule_handler($field, $rule_constraint, $this->data);
                 } catch (FieldError $e) {
@@ -310,13 +319,13 @@ class Validator
             }
         );
 
-        
+
         if (!count($this->getErrors($field))) {
             $value = $this->data($field) === "on" ? true : $this->data($field);
             $value = empty($this->data($field)) ? false : $this->data($field);
             $this->valid_data = array_merge($this->valid_data, [$field => $value]);
         }
-        
+
         return $this;
     }
 
@@ -356,17 +365,26 @@ class Validator
      */
     public function helpers(): array
     {
+
+        $csrf = new csrf();
+        // Generate Token Id and Valid
+        $token_id = $csrf->get_token_id();
+        $token_value = $csrf->get_token();
+
         $errors = fn ($name) => $this->printErrors($name);
         $data = fn ($name) => $this->data($name);
         $errorClass = fn ($name) => $this->hasError($name) ? "error" : "";
         $mainError = fn () => $this->getMainError() ? <<<ST
         <div class="formError">{$this->getMainError()}</div>
         ST : "";
-        $success_msg = fn() => $this->getSuccessMsg() ? <<<ST
+        $success_msg = fn () => $this->getSuccessMsg() ? <<<ST
         <div class="formMsg">{$this->getSuccessMsg()}</div>
         ST : "";
-        // var_dump($errorClass('remember_me'));
-        return [$errors, $data, $errorClass, $mainError, $success_msg];
+        $crsf_field = fn () => <<<ST
+            <input type='hidden' name="$token_id" value="$token_value" />
+        ST;
+        
+        return [$errors, $data, $errorClass, $mainError, $success_msg, $crsf_field];
     }
 }
 

@@ -3,11 +3,11 @@
 
 session_start();
 
-require "./Auth.php";
-require "../forms/Validator.php";
+require "Auth.php";
+require __DIR__ . "/../forms/Validator.php";
 
 $validator = new Validator();
-list($errors, $data, $errorClass, $mainError, $msg) = $validator->helpers();
+list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
 
 $shouldVerify = false;
 
@@ -72,7 +72,7 @@ $validator->methodPost(
             <?php echo $msg(); ?>
             <?php echo $mainError(); ?>
             <div class="formBody">
-
+                <?php echo $csrf(); ?>
                 <div class="authInput <?php echo $errorClass('username'); ?>">
                     <Label for="login_username">Username or email</Label>
                     <input value="<?php echo $data("username"); ?>" name="username" placeholder="Type username.." type="text" id="login_username" />

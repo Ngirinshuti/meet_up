@@ -6,7 +6,7 @@ require "./Auth.php";
 require "../forms/Validator.php";
 
 $validator = new Validator();
-list($errors, $data, $errorClass, $mainError, $msg) = $validator->helpers();
+list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
 
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError) = $validator->helpers();
@@ -68,7 +68,7 @@ $validator->methodPost(
             <?php echo $msg(); ?>
             <?php echo $mainError(); ?>
             <div class="formBody">
-
+                <?php echo $csrf(); ?>
                 <div class="authInput split <?php echo $errorClass('username'); ?>">
                     <div class="authInput__split">
                         <Label for="signup_firstname">Firstname</Label>

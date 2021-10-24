@@ -17,7 +17,7 @@ $MAIL_SENDER = "ishimwedeveloper@gmail.com";
 
 
 // urls
-$ROOT_URL = "/project2";
+$ROOT_URL = "/new_meet_up";
 $LOGIN_URL = $ROOT_URL . "/auth/index.php";
 
 // security

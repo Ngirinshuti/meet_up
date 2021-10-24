@@ -7,7 +7,7 @@ require "./Auth.php";
 require "../forms/Validator.php";
 
 $validator = new Validator();
-list($errors, $data, $errorClass, $mainError, $msg) = $validator->helpers();
+list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
 
 // resend email if necessary
 if (isset($_GET['resend']) && intval($_GET['resend']) != intval($_SESSION['resend'])) {
@@ -70,6 +70,7 @@ $validator->methodPost(
             <?php echo $msg(); ?>
             <?php echo $mainError(); ?>
             <div class="formBody">
+                <?php echo $csrf(); ?>
                 <input type="hidden" name="email" value="<?php echo isset($_SESSION['verify_email']) ? $_SESSION['verify_email'] : ""; ?>" />
                 <div class="authInput <?php echo $errorClass('verification_code'); ?>">
                     <Label for="verification_code">Verification code</Label>

@@ -3,8 +3,8 @@
 /**
  * New user file
  */
-require "../config.php";
-require $ROOT_DIR .  "/classes/DB.php";
+require __DIR__ . "/../config.php";
+require_once $ROOT_DIR .  "/classes/DB.php";
 
 
 /**

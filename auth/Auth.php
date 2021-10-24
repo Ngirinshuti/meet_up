@@ -4,9 +4,9 @@
  * Authentication file
  */
 
-require "../config.php";
-require "./User.php";
-require "./Mail.php";
+require_once __DIR__ . "/../config.php";
+require_once __DIR__ . "/User.php";
+require_once __DIR__ . "/Mail.php";
 
 /**
  * Authentication class
