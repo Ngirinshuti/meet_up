@@ -10,7 +10,7 @@
  * @link     https://meet_up.com
  */
 if (!class_exists('Message')) {
-    include "./../classes/message.php";
+    include_once "./../classes/message.php";
 }
 require_once __DIR__ . "/../classes/DB.php";
 

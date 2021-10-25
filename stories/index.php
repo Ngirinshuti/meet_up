@@ -106,20 +106,8 @@ function fromActiveUser(Story $story)
 </head>
 
 <body>
-    <?php require_once "../menu/menu.php"; ?>
-    <!-- <nav>
-        <div class="logo">MeetUp</div>
-        <ul>
-            <li><a href="../friends/profile.php">Profile</a></li>
-            <li><a href="./index.php">All Stories</a></li>
-            <li><a href="../friends/friends.php">Friends</a></li>
-        </ul>
-        <div class="account">
-            <img src="../images/<?php echo $me->profile_pic; ?>" alt="Image" class="accountImg">
-        </div>
-
-    </nav> -->
     <div class="storyContainer">
+        <?php require_once "../menu/menu.php"; ?>
 
         <div class="sideBar">
             <h1 class="sideBarHeader">Stories</h1>

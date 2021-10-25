@@ -2,8 +2,7 @@
 // intialization file
 require_once __DIR__ . "/../auth/authenticate.php";
 
-$dir = __DIR__;
-require_once  $dir . "/../config.php";
+require_once  __DIR__ . "/../config.php";
 require_once 'old_user.php';
 require_once 'DB.php';
 require_once 'friend_system.php';

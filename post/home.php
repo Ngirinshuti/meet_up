@@ -1,9 +1,9 @@
 <?php
 // home feed file
 
-require __DIR__ .  '/../classes/init.php';
-require __DIR__ . "/./Post.php";
-require __DIR__ . "/../forms/Validator.php";
+require_once __DIR__ .  '/../classes/init.php';
+require_once __DIR__ . "/./Post.php";
+require_once __DIR__ . "/../forms/Validator.php";
 
 $user = $me;
 

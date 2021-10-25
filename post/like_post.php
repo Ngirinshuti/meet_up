@@ -5,7 +5,7 @@ if (!isset($_POST['username']) || !isset($_POST['post_id'])) {
     exit;
 }
 
-require "./Post.php";
+require_once "./Post.php";
 
 $post = Post::findOne((int) $_POST['post_id']);
 

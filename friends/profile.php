@@ -1,4 +1,7 @@
-<?php require "../classes/init.php"; ?>
+<?php 
+
+	require_once "../classes/init.php"; 
+?>
 <!DOCTYPE html>
 <html>
 
