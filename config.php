@@ -36,3 +36,11 @@ function gotoDir($sub_dir = "") {
 
     echo $ROOT_DIR . $sub_dir;
 };
+
+function current_url_full() {
+    return $_SERVER['REQUEST_URI'];
+}
+
+function current_url() {
+    return explode("?", current_url_full())[0];
+}

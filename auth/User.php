@@ -168,4 +168,48 @@ class User
 
         return (bool) $stmt->rowCount();
     }
+
+    /**
+     * Get all users execept specified
+     *
+     * @param array $except excluded users
+     * @return array
+     */
+    public static function getAll(array $except = []):array
+    {
+        $args = implode(",", str_split(str_repeat("?", count($except))));
+
+        $args = strlen($args) > 0 ? $args : ", $args";
+
+        $query = "SELECT * FROM `users` WHERE `username` NOT IN ('', $args) LIMIT 25";
+        $stmt = DB::conn()->prepare($query);
+        $stmt->execute($except);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * Get all non friends users
+     * 
+     * @return array
+     */
+    public function getNonFriends():array
+    {
+        $query = "SELECT * FROM `users` WHERE `users`.`username` NOT IN 
+        (
+            SELECT DISTINCT (CASE WHEN friends.friend = :me THEN friends.partener ELSE friends.friend END)
+            FROM `friends` WHERE :me  IN (`friends`.`partener`,`friends`.`friend`)
+        )
+        AND `users`.`username` NOT IN 
+        (
+            SELECT DISTINCT (CASE WHEN sender = :me THEN reciever ELSE sender END) 
+            FROM `friendrequest` WHERE :me IN (sender,reciever)
+        )
+        AND `users`.`username` != :me";
+
+        $stmt = DB::conn()->prepare($query);
+        $stmt->execute([":me" => $this->username]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+        return $stmt->fetchAll();
+    }
 }

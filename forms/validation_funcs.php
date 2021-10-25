@@ -203,6 +203,13 @@ function isFile(string $field_name, string $upload_dir, array &$data)
     }
 }
 
+function in(string $field_name, array $values, array $data)
+{
+    $value = $data[$field_name];
+
+    throwError(!in_array($value, $values), "$field_name is invalid");
+}
+
 
 
 /**

@@ -88,7 +88,6 @@ $posts = Post::getFriendsPosts($user->username);
                 <button type="submit" style="display: inline-block;max-width:max-content;">Post Now</button>
             </form>
         </div>
-        <hr>
         <div class="postContainer">
             <?php foreach ($posts as $post) : ?>
                 <div class="userpost"  id="post<?php echo $post->id; ?>">

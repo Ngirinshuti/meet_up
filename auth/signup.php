@@ -7,8 +7,6 @@ require_once __DIR__ . "/../forms/Validator.php";
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
 
-$validator = new Validator();
-list($errors, $data, $errorClass, $mainError) = $validator->helpers();
 
 $validator->methodPost(
     function (Validator $validator) {

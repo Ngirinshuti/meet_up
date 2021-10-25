@@ -1,15 +1,12 @@
-
-
 .postForm.formContainer {
+    padding: .5rem;
     background: var(--secondary-bg);
     width: 100%;
     max-width: unset;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 0.5rem;
-    align-items: center;
-    justify-content: space-between;
-    border-radius:  0 0 1rem 1rem;
+    border-radius: 0 0 1rem 1rem;
 }
 
 .postForm.formContainer label {
@@ -49,12 +46,11 @@
 .postHeader {
     display: flex;
     background-color: var(--main-bg);
-    padding: .5rem;
+    padding: 0.5rem;
     margin: 0.15rem;
     border-radius: 10px;
 }
 .postUser {
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,16 +63,21 @@
     margin-right: 0.5rem;
 }
 
+.postContainer {
+    margin: 1rem 0 2rem;
+}
+
 .postBody {
-    padding: .5rem;
+    padding: 0.5rem;
 }
 
 .postText {
     font-size: large;
-    padding: .5rem;
+    padding: 0.5rem;
 }
 
-.postImg, .postVideo {
+.postImg,
+.postVideo {
     width: 100%;
     /* max-height: 100vh; */
     object-fit: cover;
@@ -85,4 +86,12 @@
 .postFooter {
     display: flex;
     justify-content: space-between;
+}
+
+@media screen and (min-width: 760px) {
+    .postForm.formContainer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
