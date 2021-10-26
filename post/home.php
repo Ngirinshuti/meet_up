@@ -20,7 +20,7 @@ $validator->methodPost(
     function (Validator $validator) {
         $validator->addRules(
             [
-                "post" => ["not_empty" => true, "min_length" => 5],
+                "post" => ["required_without" => ["image", "video"]],
                 "image" => ['is_file' => __DIR__ . "/images"],
                 "video" => ['is_file' => __DIR__ . "/videos"],
                 "username" => []
@@ -79,7 +79,7 @@ $posts = Post::getFriendsPosts($user->username);
                 </div>
                 <div class="filesWrapper">
                     <label for="image">Add Image</label>
-                    <input class=" <?php echo $errorClass('image'); ?>" data-image-input accept="image/*" id="image" name="image" type="file" title="Picture" />
+                    <input data-tooltip="Post an image" class=" <?php echo $errorClass('image'); ?>" data-image-input accept="image/*" id="image" name="image" type="file" title="Picture" />
                     <?php echo $errors('image'); ?>
                     <label for="video">Add Video</label>
                     <input class=" <?php echo $errorClass('video'); ?>" data-video-input accept="video/*" id="video" type="file" name="video" title="Video">
@@ -118,7 +118,40 @@ $posts = Post::getFriendsPosts($user->username);
                             <input type="hidden" name="username" value="<?php echo $post->username; ?>">
                         <button class="likeBtn">Like <?php echo $post->likes(); ?></button>
                     </form>
-                        <button class="cmtBtn">Comment</button>
+                        <button data-comment class="cmtBtn">Comment</button>
+                    </div>
+                    <div class="commentContainer">
+                        <label for="user-comment">Comment</label>
+                        <div class="commentForm">
+                            <textarea id="user-comment" placeholder="comment here.." data-comment-area></textarea>
+                            <button data-comment-btn>Post</button>
+                        </div>
+                        <div class="commentList">
+                            <div class="comment">
+                                <div class="commentUserImg">
+                                    <img src="<?php echo getUrl("/images/{$me->profile_pic}");  ?>" alt="comment">
+                                </div>
+                                <div class="commentContent">
+                                    <span class="commentUserName"><?php echo $me->username; ?></span>
+                                    <div class="commentBody">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, eius.</div>
+                                    <div class="commentBtns">
+                                        <button class="commentBtn likeBtn" data-comment-like>Like 1</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment">
+                                <div class="commentUserImg">
+                                    <img src="<?php echo getUrl("/images/{$me->profile_pic}");  ?>" alt="comment">
+                                </div>
+                                <div class="commentContent">
+                                    <span class="commentUserName"><?php echo $me->username; ?></span>
+                                    <div class="commentBody">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, eius.</div>
+                                    <div class="commentBtns">
+                                        <button class="commentBtn likeBtn" data-comment-like>Like 1</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>

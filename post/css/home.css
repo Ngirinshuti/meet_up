@@ -1,3 +1,5 @@
+@import url('./comments.css');
+
 .postForm.formContainer {
     padding: .5rem;
     background: var(--secondary-bg);

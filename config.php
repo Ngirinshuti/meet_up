@@ -24,8 +24,6 @@ $LOGIN_URL = $ROOT_URL . "/auth/index.php";
 // security
 $PASSWORD_SALT = "salting_string@12345";
 
-
-
 function getUrl($sub_url = "") {
     $ROOT_URL = $GLOBALS['ROOT_URL'];
     return $ROOT_URL . $sub_url;

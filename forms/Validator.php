@@ -43,7 +43,7 @@ class Validator
     public function __construct(array $rules = [], array $data = [])
     {
         $this->rules = $rules;
-        $this->data = $data;
+        $this->data = array_merge($data, $_FILES);
     }
 
     /**

@@ -211,6 +211,36 @@ function in(string $field_name, array $values, array $data)
 }
 
 
+function requiredWithout(string $field_name, string|array $fields, array &$data)
+{
+    $none_is_set = true;
+    $field_available = isset($data[$field_name]) && !empty($data[$field_name]);
+
+    if ($field_available) {
+        return;
+    }
+    
+    if (is_string($fields)) {
+        $fields = $fields !== "*" ? [$fields] : $data;
+    }
+
+    if (is_array($fields)) {
+        foreach ($fields as $key => $value) {
+            if (isset($data[$value]) && !empty($data[$value])) {
+                if (isset($data[$value]['name'])){
+                    $none_is_set = empty($data[$value]['name']);
+                    break;
+                }
+
+                $none_is_set = false;
+                break;
+            }
+        }
+    }
+
+    throwError($none_is_set, "At least $field_name should be provided");
+}
+
 
 /**
  * Throws field error whenever error occurs

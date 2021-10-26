@@ -45,7 +45,7 @@
 
 .friendsList {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
     justify-items: center;
     gap: 1rem;
@@ -104,6 +104,12 @@
 
 
 @media screen and (max-width: 760px) {
+    .friendsList {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 560px) {
     .friendsList {
         grid-template-columns: 1fr;
     }

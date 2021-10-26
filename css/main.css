@@ -83,6 +83,7 @@ nav ul li a {
     transition: opacity 0.3s, color 0.3s, background-color 0.3s;
     border-radius: 0.5rem;
     text-transform: uppercase;
+    position: relative;
 }
 
 nav ul li a:hover {
@@ -98,6 +99,7 @@ nav .navLogo {
 nav ul li:hover .subNav {
     opacity: 1;
     pointer-events: all;
+    transform: translateY(3px) scale(1);
 }
 
 nav ul.subNav::before {
@@ -111,29 +113,44 @@ nav ul.subNav::before {
 }
 
 nav ul.subNav {
-    transform: translateY(5px);
+    transform: translateY(3px) scale(.5);
     opacity: 0;
-    padding: 1rem;
+    padding: .5rem;
     background-color: var(--secondary-bg);
     pointer-events: none;
     position: absolute;
     border-radius: 10px;
     transition: 0.3s;
     right: 0;
+    max-width: max-content;
+    text-align: center;
+    box-shadow: 4px 4px 6px rgba(20, 20, 20, 0.3);
+    border: 1px solid rgba(200, 200, 200, 0.3);
+    margin: 0;
+    z-index: 20;
 }
 
-nav li a[data-tooltip]:hover::after {
+nav ul.subNav a {
+    margin: 0;
+}
+
+[data-tooltip]{
+    position: relative;
+}
+
+[data-tooltip]:hover::after {
     transform: none;
     visibility: visible;
-
+    transform: translateY(3px);
 }
-nav li a[data-tooltip]::after {
+
+[data-tooltip]::after {
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(2px);
+    transform: translateY(0);
     position: absolute;
     content: attr(data-tooltip);
-    top: 100%;
+    top: 110%;
     background-color: var(--accent-bg-opacity);
     backdrop-filter: blur(10px);
     color: var(--white);
