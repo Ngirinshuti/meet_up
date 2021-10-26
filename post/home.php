@@ -113,7 +113,9 @@ $posts = Post::getFriendsPosts($user->username);
                         <form action="like_post.php" method="post">
                             <input type="hidden" name="post_id" value="<?php echo $post->id; ?>">
                             <input type="hidden" name="username" value="<?php echo $post->username; ?>">
-                        <button class="likeBtn">Like <?php echo $post->likes(); ?></button>
+                        <button class="postLike <?php echo $post->likedBy($me->username) ? "liked" : ""; ?> likeBtn">
+                        <?php echo $post->likedBy($me->username) ? "UnLike" : "Like"; ?>
+                        <span class="likeNum"> <?php echo $post->likes(); ?></span></button>
                     </form>
                         <button data-comment-toggle class="cmtBtn">Comment</button>
                     </div>

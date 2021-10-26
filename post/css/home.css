@@ -1,7 +1,7 @@
-@import url('./comments.css');
+@import url("./comments.css");
 
 .postForm.formContainer {
-    padding: .5rem;
+    padding: 0.5rem;
     background: var(--secondary-bg);
     width: 100%;
     max-width: unset;
@@ -88,6 +88,21 @@
 .postFooter {
     display: flex;
     justify-content: space-between;
+}
+
+.postLike.likeBtn:not(.liked) {
+    background-color: unset;
+    border: 2px solid var(--accent-bg);
+}
+
+.likeNum {
+    display: inline;
+    font-weight: 900;
+    transform: scale(1.4);
+    margin-left: 0.25rem;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    padding: 2px 7.5px;
 }
 
 @media screen and (min-width: 760px) {

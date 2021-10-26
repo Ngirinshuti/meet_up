@@ -58,21 +58,29 @@
 .comment {
     display: flex;
     gap: .25rem;
+    background-color: var(--secondary-bg);
+    padding: .5rem;
+    border-radius: 10px;
+    /* align-items: center; */
+    justify-content: flex-start;
 }
 
 .commentContent {
-    flex: 1;
+    flex: 80%;
     display: flex;
+    justify-content: space-between;
+    gap: .35rem;
     flex-direction: column;
 }
 
 .commentBody {
+    flex: 2;
     border-radius: 10px;
     padding: .5rem 1rem .5rem;
-    background-color: var(--secondary-bg);
-    margin-bottom: 0.25rem;
-    max-width: fit-content;
-    min-width: 40%;
+    /* margin: 0.25rem; */
+    max-width: max-content;
+    /* width: 100%; */
+    background-color: var(--main-bg);
 }
 
 .commentBtns .likeBtn {
