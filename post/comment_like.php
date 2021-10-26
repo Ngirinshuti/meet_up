@@ -2,12 +2,12 @@
 
 require_once __DIR__ . "/./comment_api.php";
 
-if (!isset($_GET['comment_id'])) {
+if (!isset($_POST['comment_id'])) {
     $closure = fn () => ["errors" => ["comment_id" => ["Comment necessary"]]];
     return sendJson($closure);
 }
 
-$comment_id = intval($_GET['comment_id']);
+$comment_id = intval($_POST['comment_id']);
 $comment = Comment::findOne($comment_id);
 
 if ($comment->likedBy($me->username)){

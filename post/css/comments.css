@@ -78,7 +78,7 @@
 .commentBtns .likeBtn {
     padding: .35rem .5rem;
     background-color: unset;
-    color: var(--accent-bg);
+    color: var(--white);
     text-transform: capitalize;
     background-color: var(--accent-color-opacity);
     margin-bottom: 0.25rem;

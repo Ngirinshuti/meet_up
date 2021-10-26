@@ -38,6 +38,7 @@ commentContainers.forEach((container) => {
     // create comment
     commentBtn.addEventListener("click", async (e) => {
         e.preventDefault();
+        if (commentTextarea.value.trim().length === 0) return;
         const body = new FormData(commentTextarea.closest("form"));
         const commentEl = await createComment(body);
         commentList.prepend(commentEl);
@@ -78,7 +79,7 @@ async function createComment(body) {
                     handleErrors(result.errors);
                     resolve([]);
                 }
-                console.log(result);
+                // console.log(result);
                 resolve(makeComment(result));
             }
         });
@@ -87,13 +88,11 @@ async function createComment(body) {
 }
 
 function makeComment(comment) {
-    console.log(comment);
     const commentClone = commentTemp.content.cloneNode(true);
     commentClone.querySelector(".commentUserName").textContent =
         comment.username;
     commentClone.querySelector(".commentBody").textContent = comment.comment;
     const img = document.createElement("img");
-    console.log(comment.profile_pic);
     readImage(img, comment.profile_pic);
     img.className = commentClone.querySelector("img").className;
     commentClone.querySelector("img").replaceWith(img);
@@ -104,14 +103,16 @@ function makeComment(comment) {
     likeBtn.addEventListener('click', e => {
         const data = new FormData();
         data.append("comment_id", comment.id);
-        likeComment(commentClone, data);
+        likeComment(likeBtn, data);
     });
+    // console.log(comment.id);
+    commentClone.id = "comment"+comment.id;
 
     return commentClone;
 }
 
 function readImage(img, url) {
-    fetch("/new_meet_up/images/" + url).then(async (res) => {
+    fetch("../images/" + url).then(async (res) => {
         res.blob()
         .then(blob => {
             const new_url = URL.createObjectURL(blob);
@@ -123,6 +124,8 @@ function readImage(img, url) {
 function likeComment(el, data) {
     fetch("../post/comment_like.php", { method: "POST", body: data })
     .then(async res => {
-        el.replaceWith(makeComment(await res.json()));
+        const comment = await res.json();
+        // console.log({el, comment})
+        el.closest(".comment").replaceWith(makeComment(comment));
     })
 }
