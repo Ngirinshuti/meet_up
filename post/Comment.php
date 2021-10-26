@@ -8,6 +8,7 @@ class Comment {
     public string $comment;
     public string $username;
     public User $owner;
+    public int $likes;
 
     /**
      * Create new comment
@@ -29,8 +30,9 @@ class Comment {
         $stmt = $conn->prepare($query);
         $stmt->execute([":username" => $username, ":post_id" => $post_id, ":comment" => $comment]);
         $comment_id = $conn->lastInsertId("id");
-
-        return Comment::findOne($comment_id);
+        $comment = Comment::findOne($comment_id);
+        
+        return $comment;
     }
 
     /**
@@ -42,12 +44,18 @@ class Comment {
      */
     public static function findOne(int $id):Comment
     {
-        $query  = "SELECT * FROM `comments` WHERE `id` = ?";
+        $query  = "SELECT `comments`.*,
+            (
+                SELECT COUNT(`comment_likes`.`comment_id`) FROM `comment_likes` 
+                WHERE `comment_likes`.`comment_id` = `comments`.`id`
+            ) as likes
+            FROM `comments` WHERE `id` = ?
+        ";
         $stmt = DB::conn()->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
         $stmt->execute([$id]);
-
-        return $stmt->fetch();
+        $comment = $stmt->fetch();
+        return $comment;
     }
 
     /**
@@ -56,9 +64,17 @@ class Comment {
      * @param integer $post_id
      * @return array
      */
-    public function findByPost(int $post_id):array
+    public static function findByPost(int $post_id, int $page = 0, int $limit = 5):array
     {
-        $query  = "SELECT * FROM `comments` WHERE `post_id` = ? ORDER BY `created_at` DESC";
+        $page = $page * $limit;
+        $query  = "SELECT `comments`.*, 
+            (
+                SELECT COUNT(`comment_likes`.`comment_id`) FROM `comment_likes` 
+                WHERE `comment_likes`.`comment_id` = `comments`.`id`
+            ) as likes
+            FROM `comments` WHERE `post_id` = ? 
+            ORDER BY `created_at` DESC LIMIT $limit OFFSET $page
+        ";
         $stmt = DB::conn()->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
         $stmt->execute([$post_id]);
@@ -123,22 +139,6 @@ class Comment {
         $stmt->execute([$username, $this->id]);
     
         return $stmt->rowCount() > 0;
-    }
-    
-    /**
-     * Get post likes count
-     * 
-     * @return int likes
-     */
-    public function likes()
-    {
-        $query = "SELECT COUNT(`comment_likes`.`username`) as likes FROM `comment_likes` WHERE `comment_id` = ?";
-
-        $stmt = DB::conn()->prepare($query);
-        $stmt->execute([$this->id]);
-        $likes = $stmt->fetch(PDO::FETCH_OBJ)->likes;
-    
-        return $likes;
     }
 
     /**
