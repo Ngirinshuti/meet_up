@@ -366,11 +366,6 @@ class Validator
     public function helpers(): array
     {
 
-        $csrf = new csrf();
-        // Generate Token Id and Valid
-        $token_id = $csrf->get_token_id();
-        $token_value = $csrf->get_token();
-
         $errors = fn ($name) => $this->printErrors($name);
         $data = fn ($name) => $this->data($name);
         $errorClass = fn ($name) => $this->hasError($name) ? "error" : "";
@@ -392,11 +387,22 @@ class Validator
     
         };
 
-        $crsf_field = fn () => <<<ST
-            <input type="hidden" name="$token_id" value="$token_value" />
-        ST;
-        return [$errors, $data, $errorClass, $mainError, $success_msg, $crsf_field];
+        return [$errors, $data, $errorClass, $mainError, $success_msg, $this->getCsrfField()];
         
+    }
+    
+    function getCsrfField():Closure {
+        $csrf = new csrf();
+        
+        // Generate Token Id and Valid
+        $token_id = $csrf->get_token_id();
+        $token_value = $csrf->get_token();
+        $crsf_field = function() use ($token_id, $token_value){
+            return <<<ST
+            <input data-csrf type="hidden" name="$token_id" value="$token_value" />
+            ST;
+        };
+        return $crsf_field;
     }
 }
 

@@ -44,12 +44,16 @@ class Comment {
      */
     public static function findOne(int $id):Comment
     {
-        $query  = "SELECT `comments`.*,
+        $query  = "SELECT `comments`.*, 
             (
-                SELECT COUNT(`comment_likes`.`comment_id`) FROM `comment_likes` 
+                SELECT `users`.`profile_pic` FROM `users` WHERE `users`.username = `comments`.username
+            ) as `profile_pic`,
+            (
+                SELECT COUNT(`comment_likes`.`comment_id`) as likes FROM `comment_likes` 
                 WHERE `comment_likes`.`comment_id` = `comments`.`id`
             ) as likes
-            FROM `comments` WHERE `id` = ?
+            FROM `comments` 
+            WHERE `id` = ?
         ";
         $stmt = DB::conn()->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
@@ -67,12 +71,17 @@ class Comment {
     public static function findByPost(int $post_id, int $page = 0, int $limit = 5):array
     {
         $page = $page * $limit;
-        $query  = "SELECT `comments`.*, 
+        $query  = "SELECT `comments`.*,  
             (
-                SELECT COUNT(`comment_likes`.`comment_id`) FROM `comment_likes` 
+                SELECT `users`.`profile_pic` FROM `users` WHERE `users`.`username` = `comments`.`username`
+            ) as profile_pic,
+            (
+                SELECT COUNT(`comment_likes`.`comment_id`) as likes FROM `comment_likes` 
                 WHERE `comment_likes`.`comment_id` = `comments`.`id`
             ) as likes
-            FROM `comments` WHERE `post_id` = ? 
+            FROM `comments` 
+            WHERE 
+            `post_id` = ? 
             ORDER BY `created_at` DESC LIMIT $limit OFFSET $page
         ";
         $stmt = DB::conn()->prepare($query);

@@ -10,8 +10,8 @@ function getActive($url)
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/font-awesome-4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="<?php echo getUrl("/css/font-awesome-4.5.0/css/font-awesome.min.css") ?>">
+    <link rel="stylesheet" href="<?php echo getUrl("/css/main.css") ?>">
 </head>
 
 <nav>

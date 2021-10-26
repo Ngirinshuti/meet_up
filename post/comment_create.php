@@ -11,7 +11,7 @@ $validator->methodPost(function (Validator $validator) {
         "comment" => ["not_empty" => true],
         "post_id" => [],
         "username" => []
-    ]);
+    ])->addData($_POST)->validate();
 
     if (!$validator->valid) {
         sendJson(fn () => $validator->getErrors());
@@ -19,6 +19,7 @@ $validator->methodPost(function (Validator $validator) {
 
     if ($validator->valid) {
         $comment = Comment::create(...$validator->valid_data);
+
         sendJson(fn() => $comment);
     }
 

@@ -55,11 +55,7 @@ $posts = Post::getFriendsPosts($user->username);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <link rel="stylesheet" href="../css/font-awesome-4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/style2.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="<?php echo getUrl("/post/css/home.css");  ?>">
     <?php require_once '../theme.php'; ?>
     <title>MeetUp MeetUs</title>
 </head>
@@ -74,7 +70,7 @@ $posts = Post::getFriendsPosts($user->username);
                 <input type="hidden" name="username" value="<?php echo $me->username; ?>">
                 <div class="desc mainInput">
                     <label for="area">Any words <?php echo $me ? "'{$me?->username}'" : ""; ?>?</label>
-                    <textarea name="post" class=" <?php echo $errorClass('post'); ?>" id="area" placeholder="Write to share with friends (:"><?php echo $data('post'); ?></textarea>
+                    <textarea autofocus name="post" class=" <?php echo $errorClass('post'); ?>" id="area" placeholder="Write to share with friends (:"><?php echo $data('post'); ?></textarea>
                     <?php echo $errors('post'); ?>
                 </div>
                 <div class="filesWrapper">
@@ -89,6 +85,7 @@ $posts = Post::getFriendsPosts($user->username);
             </form>
         </div>
         <div class="postContainer">
+            
             <?php foreach ($posts as $post) : ?>
                 <div class="userpost"  id="post<?php echo $post->id; ?>">
                     <div class="postHeader">
@@ -118,45 +115,46 @@ $posts = Post::getFriendsPosts($user->username);
                             <input type="hidden" name="username" value="<?php echo $post->username; ?>">
                         <button class="likeBtn">Like <?php echo $post->likes(); ?></button>
                     </form>
-                        <button data-comment class="cmtBtn">Comment</button>
+                        <button data-comment-toggle class="cmtBtn">Comment</button>
                     </div>
-                    <div class="commentContainer">
+                    
+                    <div data-current-user="<?php echo $me->username; ?>" data-post-id="<?php echo $post->id; ?>" class="commentContainer hide">
                         <label for="user-comment">Comment</label>
-                        <div class="commentForm">
-                            <textarea id="user-comment" placeholder="comment here.." data-comment-area></textarea>
+                        <form data-comment-form class="commentForm">
+                            <?php echo $validator->getCsrfField()(); ?>
+                            <input type="hidden" name="username" value="<?php echo $me->username; ?>">
+                            <input type="hidden" name="post_id" value="<?php echo $post->id; ?>">
+                            <textarea autofocus name="comment" id="user-comment" placeholder="comment here.." data-comment-area></textarea>
                             <button data-comment-btn>Post</button>
-                        </div>
+                        </form>
                         <div class="commentList">
-                            <div class="comment">
-                                <div class="commentUserImg">
-                                    <img src="<?php echo getUrl("/images/{$me->profile_pic}");  ?>" alt="comment">
-                                </div>
-                                <div class="commentContent">
-                                    <span class="commentUserName"><?php echo $me->username; ?></span>
-                                    <div class="commentBody">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, eius.</div>
-                                    <div class="commentBtns">
-                                        <button class="commentBtn likeBtn" data-comment-like>Like 1</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment">
-                                <div class="commentUserImg">
-                                    <img src="<?php echo getUrl("/images/{$me->profile_pic}");  ?>" alt="comment">
-                                </div>
-                                <div class="commentContent">
-                                    <span class="commentUserName"><?php echo $me->username; ?></span>
-                                    <div class="commentBody">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, eius.</div>
-                                    <div class="commentBtns">
-                                        <button class="commentBtn likeBtn" data-comment-like>Like 1</button>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
+
+    <!-- comment template -->
+        <template data-comment-template>
+            <div class="comment">
+                <div class="commentUserImg">
+                    <img src="<?php echo getUrl("/images/{$me->profile_pic}");  ?>" alt="comment">
+                </div>
+                <div class="commentContent">
+                    <span class="commentUserName"><?php echo $me->username; ?></span>
+                    <div class="commentBody">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, eius.</div>
+                    <div class="commentBtns">
+                        <button class="commentBtn likeBtn" data-comment-like>Like 1</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!-- comment template -->
+
+
+    <script src="<?php echo getUrl("/post/js/comments.js");  ?>" defer></script>
     <script defer>
         window.addEventListener("DOMContentLoaded", e => {
             const imageInput = document.querySelector("[data-image-input]")
@@ -188,6 +186,8 @@ $posts = Post::getFriendsPosts($user->username);
             })
         })
     </script>
+
+    
 </body>
 
 </html>
