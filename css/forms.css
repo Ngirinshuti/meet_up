@@ -81,7 +81,7 @@ textarea {
     margin: 0.5rem 0;
     outline: none;
     background: var(--main-bg);
-    color: var(--white);
+    color: var(--main-color);
     font-size: 0.95rem;
     border-radius: 0.5rem;
 }

@@ -12,6 +12,7 @@ function getActive($url)
     <meta charset="utf-8">
     <link rel="stylesheet" href="<?php echo getUrl("/css/font-awesome-4.5.0/css/font-awesome.min.css") ?>">
     <link rel="stylesheet" href="<?php echo getUrl("/css/main.css") ?>">
+    <script src="../js/theme.js" defer></script>
 </head>
 
 <nav>
@@ -47,6 +48,11 @@ function getActive($url)
                 <li>
                     <a href="<?php echo getUrl("/friends/logout.php"); ?>">Logout</a>
                 </li>
+                <div class="themeContainer">
+                    <label for="theme-check">Darmode</label>
+                    <input type="checkbox" id="theme-check">
+                    <div class="theme-scroll"></div>
+                </div>
             </ul>
         </li>
     </ul>

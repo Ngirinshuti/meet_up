@@ -11,10 +11,24 @@
     --main-bg: #303942;
     --secondary-bg: #252e35;
     --main-color: #8e9bab;
-    --white: #e5dcff;
+    --white: white;
     --accent-color-opacity: #4169e149;
     --red: rgb(165, 75, 75);
     --green: rgb(58, 153, 58);
+}
+
+body.light {
+    --accent-color: #2e398f;
+    --accent-bg: #7269ef;
+    --accent-bg-opacity: #c5c0fd9f;
+    --main-bg: #f5f7fb;
+    --secondary-bg: hsl(220, 100%, 74%);
+    --main-color: #495057;
+    --white: black;
+    --accent-color-opacity: #4169e18a;
+    --red: rgb(165, 75, 75);
+    --green: rgb(58, 153, 58);
+    
 }
 
 body {
@@ -125,8 +139,10 @@ nav ul.subNav {
     max-width: max-content;
     text-align: center;
     box-shadow: 4px 4px 6px rgba(20, 20, 20, 0.3);
-    border: 1px solid rgba(200, 200, 200, 0.3);
+    border: 1px solid var(--white);
     margin: 0;
+    display: flex;
+    flex-direction: column;
     z-index: 20;
 }
 
@@ -153,7 +169,7 @@ nav ul.subNav a {
     top: 110%;
     background-color: var(--accent-bg-opacity);
     backdrop-filter: blur(10px);
-    color: var(--white);
+    color: white;
     padding: .35rem 0.75rem;
     z-index: 10;
     border-radius: 10px;
@@ -164,7 +180,7 @@ nav ul.subNav a {
 
 nav li a.active {
     background-color: var(--accent-bg) !important;
-    color: var(--white) !important;
+    color: white !important;
 }
 
 nav .navUserImage {
@@ -197,7 +213,7 @@ nav .navUserImage img {
     cursor: pointer;
     border: 0;
     background-color: var(--accent-bg);
-    color: var(--white);
+    color: white;
     text-transform: uppercase;
     padding: 0.75rem 1rem;
     border-radius: 5px;
@@ -240,6 +256,18 @@ button::before {
     margin: 0 auto;
 }
 
+.themeContainer {
+    background-color: var(--main-bg);
+    padding: .5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--accent-color);
+}
+
+.themeContainer input:not(:checked) {
+    outline: none!important;
+    box-shadow: none!important;
+}
 
 @media screen and (max-width: 760px) {
     nav ul li a {

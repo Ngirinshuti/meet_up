@@ -71,7 +71,8 @@
     flex-direction: column;
     width: 5rem;
     /* max-width: min-content; */
-    background: var(--main-bg);
+    background: var(--secondary-bg);
+    border: 2px solid rgba(0, 0, 0, 0.705);
     align-items: center;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.363);
 }
@@ -102,11 +103,14 @@
     object-position: top;
 }
 .storyCount {
-    color: var(--accent-bg) !important;
+    color: var(--white);
     font-size: x-small;
     /* font-style: italic; */
     white-space: nowrap;
     padding-left: 0.15rem;
+}
+.myStory .storyCount {
+    color: #333;
 }
 
 .storyItemBtn {
